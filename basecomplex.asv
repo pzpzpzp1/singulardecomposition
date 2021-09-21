@@ -12,12 +12,24 @@ nF = size(F,1);
 %we're done.
 %If the faces are adjacent to 1 hex, boundary
 %if they are adjacent to 2 hexes, interior. 
-for (i,j)=(1:nH,1:nH)
-        [a,~] = ismember(F,F, sort([H(i,:),8)'rows'); 
-        [b,~] = ismember(F, sort([H(j,:),8)'rows'); 
+Fb =[];  %boundary
+Fi =[];  %interior
+for j=1:nH
+    for i=1:nF
+        [a,~] = ismember(F(i,:), sort(H(j,:),8),'rows'); 
+        [b,~] = ismember(F(i,:), sort(H(j,:),8),'rows'); 
+        if a == 1 && b == 1
+            Fb = [Fb; F(i,:)];
+        else
+            Fi = [Fi; F(i,:)];
+            F = [F((1,:):(i-1,:)),F((i,:):(i-1,:))
+        end
+    end
 end
-if a is true 
-    
+
+%extract the vertices from Fi
+
+
         
 end
 
