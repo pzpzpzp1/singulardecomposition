@@ -4,13 +4,6 @@ function [Vsd,Hsd]= subdiv(V,H)
 %turns one unit to two units
 
 
-E = hex2edge(H); %sth*2
-% - Record sizes of mesh
-nV = size(V, 1);
-nH = size(H, 1);
-nE = size(E, 1);
-div %division length 1 to 0.5
-
 %m*3 -> 8*n*3 vertex resize it
 %loop through it function [Vsd,Hsd]= subdiv(V,H) 
 % input singular certex  output singular curves
@@ -65,9 +58,9 @@ end
 %index of Vnf (*3)
 Vnf_I=[];
 for i = 1:nH %unsure about indexing
-    [~,f1] = ismember(sort([H(i,2), H(i,1)],2), F, 'rows'); 
-    [~,f2] = ismember(sort([H(i,3), H(i,1)],2), F, 'rows'); 
-    [~,f3] = ismember(sort([H(i,3), H(i,2)],2), F, 'rows');  
+    [~,f1] = ismember(sort([H(i,1), H(i,2), H(i,3), H(i,4)],4), F, 'rows'); 
+    [~,f2] = ismember(sort([H(i,1), H(i,2), H(i,5), H(i,6)],4), F, 'rows'); 
+    [~,f3] = ismember(sort([H(i,2), H(i,3), H(i,6), H(i,7)],4), F, 'rows');  
     Vnf_I = [Vnf_I; f1 + nV + 1, f2 + nV + 1, f3 + nV + 1];
 end
 %index of Vne (*3)
