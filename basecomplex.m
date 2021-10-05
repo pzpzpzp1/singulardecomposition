@@ -1,4 +1,11 @@
 function [Vbc, Hbc] = basecomplex(V,H)
+
+if nargin==0
+    file_name = 'sing1.vtk';
+    mesh = load_vtk(file_name);
+    V = mesh.points;
+    H = mesh.cells;
+end
 %consider the face list
 E = hex2edge(H); %sth*2
 F = hex2face(H);
