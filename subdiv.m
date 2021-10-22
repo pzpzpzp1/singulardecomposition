@@ -52,6 +52,7 @@ end
 
 %build the V list
 Vsd = [V; Vnh; Vnf; Vne];
+
 %%% build the H list %%%
 %we want to loop through the corner of the hex. note that we only need one
 %example because the order is fixed
@@ -85,10 +86,16 @@ Ht = H';
 V1 = [Ht(:)]; 
 V7 = repmat([1:nH]+nV,8,1); %repeat 8 times in the col 1 times in the row
 V7 = [V7(:)];
-Vie = Vie +nV+1;
-Vif = Vif +nV+size(Vne,1)+1;
+Vif = Vif +nV+nH;
+Vie = Vie +nV+size(Vnf,1)+nH;
 %hex list
 Hnew = [V1, Vie, Vif, V7]; %1,3,3,1 H newly generated
 %reorder hex list to make it correct
 Hsd = [H; Hnew(:,1), Hnew(:,2), Hnew(:,5), Hnew(:,3), Hnew(:,4), Hnew(:,6), Hnew(:,8), Hnew(:,7)]; 
+Fsd = hex2face(Hsd); %sd = subdiv
+%plot
+title('subdiv'); axis equal; hold all; rotate3d on;
+patch('Faces', Fsd, 'Vertices', Vsd, 'facecolor', 'blue', 'facealpha', 0.1);
+scatter3(Vsd(:,1), Vsd(:,2), Vsd(:,3), 'k', 'filled');
+view(3); axis image vis3d off;
 end
