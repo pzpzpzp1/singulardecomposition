@@ -14,8 +14,8 @@ nF = size(F,1);
 nE = size(E,1);
 nV = size(V,1);
 
+H1 = H(1,:);
+F12 = F(1,:);
 data= hexface2hex(H1, F12, H)
-
-
 
 end
