@@ -1,4 +1,4 @@
-function [Vsd,Hsd]= subdiv(V,H) 
+function [Vsd,Hsd]= subdiv2(V,H) 
 % input hex output a divided hex
 %V: m*3; H: n*8 helper fcn 1; Hsd: 8*n*8
 %turns one unit to two units
@@ -39,14 +39,11 @@ nF = size(F, 1);
 Vne = []; %the new middle vertex of each edge (12 added)
 Vnf = []; %the new middle vertex of each face (6 added)
 Vnh = []; %the new middle vertex of each hex (1 added)
-Vne =[(V(E(:,1),:)+V(E(:,2),:))/2];
-for i = 1:nF
-    Vnf =[Vnf; (V(F(i,1),:)+V(F(i,2),:)+V(F(i,3),:)+V(F(i,4),:))/4];
-end
-for i = 1:nH
-    Vnh =[Vnh; (V(H(i,1),:)+V(H(i,2),:)+V(H(i,3),:)+V(H(i,4),:)...
-            +V(H(i,5),:)+V(H(i,6),:)+V(H(i,7),:)+V(H(i,8),:))/8];
-end
+Vne =(V(E(:,1),:)+V(E(:,2),:))/2;
+Vnf =(V(F(:,1),:)+V(F(:,2),:)+V(F(:,3),:)+V(F(:,4),:))/4;
+Vnh =(V(H(:,1),:)+V(H(:,2),:)+V(H(:,3),:)+V(H(:,4),:)...
+            +V(H(:,5),:)+V(H(:,6),:)+V(H(:,7),:)+V(H(:,8),:))/8;
+
 
 %build the V list
 Vsd = [V; Vnh; Vnf; Vne];
@@ -67,19 +64,19 @@ I = [1,2,4,5,3,8,6,7;...
     8,7,5,4,6,1,3,2];
 Vie=[]; %v index for edge
 Vif=[]; %v index for face
-for j=1:nH
+
 for i=1:8
-    [~,V2] = ismember(sort([H(j,I(i,1)), H(j,I(i,2))],2), sort(E,2), 'rows');
-    [~,V4] = ismember(sort([H(j,I(i,1)), H(j,I(i,3))],2), sort(E,2), 'rows');
-    [~,V5] = ismember(sort([H(j,I(i,1)), H(j,I(i,4))],2), sort(E,2), 'rows');
-    [~,V8] = ismember(sort([H(j,I(i,4)), H(j,I(i,1)), H(j,I(i,3)), H(j,I(i,6))],2), sort(F,2), 'rows');
-    [~,V3] = ismember(sort([H(j,I(i,1)), H(j,I(i,2)), H(j,I(i,5)), H(j,I(i,3))],2), sort(F,2), 'rows');
-    [~,V6] = ismember(sort([H(j,I(i,4)), H(j,I(i,1)), H(j,I(i,2)), H(j,I(i,7))],2), sort(F,2), 'rows');
+    [~,V2] = ismember(sort([H(:,I(i,1)), H(:,I(i,2))],2), sort(E,2), 'rows');
+    [~,V4] = ismember(sort([H(:,I(i,1)), H(:,I(i,3))],2), sort(E,2), 'rows');
+    [~,V5] = ismember(sort([H(:,I(i,1)), H(:,I(i,4))],2), sort(E,2), 'rows');
+    [~,V8] = ismember(sort([H(:,I(i,4)), H(:,I(i,1)), H(:,I(i,3)), H(:,I(i,6))],2), sort(F,2), 'rows');
+    [~,V3] = ismember(sort([H(:,I(i,1)), H(:,I(i,2)), H(:,I(i,5)), H(:,I(i,3))],2), sort(F,2), 'rows');
+    [~,V6] = ismember(sort([H(:,I(i,4)), H(:,I(i,1)), H(:,I(i,2)), H(:,I(i,7))],2), sort(F,2), 'rows');
 Vie = [Vie; V2,V4,V5];
 Vif = [Vif; V3,V6,V8];
 %2nV
 end
-end
+
 Ht = H';
 V1 = [Ht(:)]; 
 V7 = repmat([1:nH]+nV,8,1); %repeat 8 times in the col 1 times in the row
