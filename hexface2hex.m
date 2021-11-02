@@ -1,6 +1,6 @@
 function [Hdata] = hexface2hex(H1, F12, H)
-    Hdata=[H1];
-    for j =1:nH
+    Hdata(1)=H1;
+    for j =1:nH %need to know how to stop/identify boundary
     [~,Hi] = ismember(sort(H1,2), sort(H,2), 'rows');
     H(Hi,:) = [];
     [~,H2] = ismember(sort(F12(:),2), sort(H,2), 'rows');
@@ -11,6 +11,6 @@ function [Hdata] = hexface2hex(H1, F12, H)
         F12=F2;
     end
     end
-    Hdata = [Hdata, H2];
+    Hdata(j+1) = Hdata;
     end
 end
