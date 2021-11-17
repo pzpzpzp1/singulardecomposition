@@ -1,4 +1,4 @@
-function [Vsd,Hsd]= subdiv2(V,H) 
+function [Vsd,Hsd]= subdiv(V,H) 
 % input hex output a divided hex
 %V: m*3; H: n*8 helper fcn 1; Hsd: 8*n*8
 %turns one unit to two units
@@ -39,11 +39,10 @@ nF = size(F, 1);
 Vne = []; %the new middle vertex of each edge (12 added)
 Vnf = []; %the new middle vertex of each face (6 added)
 Vnh = []; %the new middle vertex of each hex (1 added)
-Vne =(V(E(:,1),:)+V(E(:,2),:))/2;
-Vnf =(V(F(:,1),:)+V(F(:,2),:)+V(F(:,3),:)+V(F(:,4),:))/4;
-Vnh =(V(H(:,1),:)+V(H(:,2),:)+V(H(:,3),:)+V(H(:,4),:)...
-            +V(H(:,5),:)+V(H(:,6),:)+V(H(:,7),:)+V(H(:,8),:))/8;
-
+Vne =[(V(E(:,1),:)+V(E(:,2),:))/2];
+Vnf =[(V(F(:,1),:)+V(F(:,2),:)+V(F(:,3),:)+V(F(:,4),:))/4];
+Vnh =[(V(H(:,1),:)+V(H(:,2),:)+V(H(:,3),:)+V(H(:,4),:)...
+            +V(H(:,5),:)+V(H(:,6),:)+V(H(:,7),:)+V(H(:,8),:))/8];
 
 %build the V list
 Vsd = [V; Vnh; Vnf; Vne];
@@ -64,7 +63,6 @@ I = [1,2,4,5,3,8,6,7;...
     8,7,5,4,6,1,3,2];
 Vie=[]; %v index for edge
 Vif=[]; %v index for face
-
 for i=1:8
     [~,V2] = ismember(sort([H(:,I(i,1)), H(:,I(i,2))],2), sort(E,2), 'rows');
     [~,V4] = ismember(sort([H(:,I(i,1)), H(:,I(i,3))],2), sort(E,2), 'rows');
@@ -74,9 +72,21 @@ for i=1:8
     [~,V6] = ismember(sort([H(:,I(i,4)), H(:,I(i,1)), H(:,I(i,2)), H(:,I(i,7))],2), sort(F,2), 'rows');
 Vie = [Vie; V2,V4,V5];
 Vif = [Vif; V3,V6,V8];
-%2nV
 end
 
+%need to reorder Vif and Vie from 12..812...81... ->1...12...2...8...8
+%this is wrong???
+V2 = reshape(Vie(:,1),8,nH);
+V2 = reshape(V2',8*nH,1);
+V4 = reshape(Vie(:,2),8,nH); V4 = reshape(V4',8*nH,1);
+V5 = reshape(Vie(:,3),8,nH); V5 = reshape(V5',8*nH,1);
+Vie = [V2,V4,V5];
+V3 = reshape(Vie(:,1),8,nH); V3 = reshape(V3',8*nH,1);
+V6 = reshape(Vie(:,2),8,nH); V6 = reshape(V6',8*nH,1);
+V8 = reshape(Vie(:,3),8,nH); V8 = reshape(V8',8*nH,1);
+Vif = [V3,V6,V8];
+
+%below is correct
 Ht = H';
 V1 = [Ht(:)]; 
 V7 = repmat([1:nH]+nV,8,1); %repeat 8 times in the col 1 times in the row
@@ -89,6 +99,7 @@ Hnew = [V1, Vie, Vif, V7]; %1,3,3,1 H newly generated
 Hsd = [H; Hnew(:,1), Hnew(:,2), Hnew(:,5), Hnew(:,3), Hnew(:,4), Hnew(:,6), Hnew(:,8), Hnew(:,7)]; 
 Fsd = hex2face(Hsd); %sd = subdiv
 %plot
+figure
 title('subdiv'); axis equal; hold all; rotate3d on;
 patch('Faces', Fsd, 'Vertices', Vsd, 'facecolor', 'blue', 'facealpha', 0.1);
 scatter3(Vsd(:,1), Vsd(:,2), Vsd(:,3), 'k', 'filled');

@@ -10,8 +10,8 @@ function [H2] = hexface2hex(H1, F12, H,V)
     end
     [V,E,F,H] = datastructure(V,H);
     [~,Hi] = ismember(sort(H1,2), sort(H,2), 'rows');
-    %ismember stops after finding one valid choice?
-    [l,Fi] = ismember(sort(F12,2), sort(F,2), 'rows');
+    [~,Fi] = ismember(sort(F12,2), sort(F,2), 'rows');
     Hj = rem(Fi,nH);
+    %the Hj contains some errors
     H2 = setdiff(Hj,Hi);
 end
