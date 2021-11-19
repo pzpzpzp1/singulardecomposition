@@ -69,14 +69,14 @@ Vie=[]; %v index for edge
 Vif=[]; %v index for face
 for j=1:nH
 for i=1:8
-    [~,V2] = ismember(sort([H(j,I(i,1)), H(j,I(i,2))],2), sort(E,2), 'rows');
-    [~,V4] = ismember(sort([H(j,I(i,1)), H(j,I(i,3))],2), sort(E,2), 'rows');
+    [~,V2] = ismember(sort([H(j,I(i,1)), H(j,I(i,2))],2), sort(E,2),'rows');
+    [~,V4] = ismember(sort([H(j,I(i,1)), H(j,I(i,3))],2), sort(E,2),'rows');
     [~,V5] = ismember(sort([H(j,I(i,1)), H(j,I(i,4))],2), sort(E,2), 'rows');
     [~,V8] = ismember(sort([H(j,I(i,4)), H(j,I(i,1)), H(j,I(i,3)), H(j,I(i,6))],2), sort(F,2), 'rows');
     [~,V3] = ismember(sort([H(j,I(i,1)), H(j,I(i,2)), H(j,I(i,5)), H(j,I(i,3))],2), sort(F,2), 'rows');
     [~,V6] = ismember(sort([H(j,I(i,4)), H(j,I(i,1)), H(j,I(i,2)), H(j,I(i,7))],2), sort(F,2), 'rows');
-Vie = [Vie; V2,V4,V5];
-Vif = [Vif; V3,V6,V8];
+    Vie = [Vie; V2,V4,V5]; %(8*nH)*3
+    Vif = [Vif; V3,V6,V8];
 %2nV
 end
 end

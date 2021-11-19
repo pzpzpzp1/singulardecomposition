@@ -63,28 +63,36 @@ I = [1,2,4,5,3,8,6,7;...
     8,7,5,4,6,1,3,2];
 Vie=[]; %v index for edge
 Vif=[]; %v index for face
+
 for i=1:8
-    [~,V2] = ismember(sort([H(:,I(i,1)), H(:,I(i,2))],2), sort(E,2), 'rows');
-    [~,V4] = ismember(sort([H(:,I(i,1)), H(:,I(i,3))],2), sort(E,2), 'rows');
+    [~,V2] = ismember(sort([H(:,I(i,1)), H(:,I(i,2))],2), sort(E,2),'rows');
+    [~,V4] = ismember(sort([H(:,I(i,1)), H(:,I(i,3))],2), sort(E,2),'rows');
     [~,V5] = ismember(sort([H(:,I(i,1)), H(:,I(i,4))],2), sort(E,2), 'rows');
     [~,V8] = ismember(sort([H(:,I(i,4)), H(:,I(i,1)), H(:,I(i,3)), H(:,I(i,6))],2), sort(F,2), 'rows');
     [~,V3] = ismember(sort([H(:,I(i,1)), H(:,I(i,2)), H(:,I(i,5)), H(:,I(i,3))],2), sort(F,2), 'rows');
     [~,V6] = ismember(sort([H(:,I(i,4)), H(:,I(i,1)), H(:,I(i,2)), H(:,I(i,7))],2), sort(F,2), 'rows');
-Vie = [Vie; V2,V4,V5];
-Vif = [Vif; V3,V6,V8];
+    Vie = [Vie; V2,V4,V5];
+    Vif = [Vif; V3,V6,V8];
 end
-
+%turn Vie back to a 3rd order tensor (instead of 2nd order) 
+Vie = reshape(Vie, nH, 8, 3);
+Vif = reshape(Vie, nH, 8, 3);
+Vie = permute(Vie, [2 1 3]);
+Vif = permute(Vif, [2 1 3]);
+%turn it back to 2nd again
+Vie = reshape(Vie, 8*nH, 3);
+Vif = reshape(Vif, 8*nH, 3);
 %need to reorder Vif and Vie from 12..812...81... ->1...12...2...8...8
 %this is wrong???
-V2 = reshape(Vie(:,1),8,nH);
-V2 = reshape(V2',8*nH,1);
-V4 = reshape(Vie(:,2),8,nH); V4 = reshape(V4',8*nH,1);
-V5 = reshape(Vie(:,3),8,nH); V5 = reshape(V5',8*nH,1);
-Vie = [V2,V4,V5];
-V3 = reshape(Vie(:,1),8,nH); V3 = reshape(V3',8*nH,1);
-V6 = reshape(Vie(:,2),8,nH); V6 = reshape(V6',8*nH,1);
-V8 = reshape(Vie(:,3),8,nH); V8 = reshape(V8',8*nH,1);
-Vif = [V3,V6,V8];
+% V2 = reshape(Vie(:,1),8,nH);
+% V2 = reshape(V2',8*nH,1);
+% V4 = reshape(Vie(:,2),8,nH); V4 = reshape(V4',8*nH,1);
+% V5 = reshape(Vie(:,3),8,nH); V5 = reshape(V5',8*nH,1);
+% Vie = [V2,V4,V5];
+% V3 = reshape(Vie(:,1),8,nH); V3 = reshape(V3',8*nH,1);
+% V6 = reshape(Vie(:,2),8,nH); V6 = reshape(V6',8*nH,1);
+% V8 = reshape(Vie(:,3),8,nH); V8 = reshape(V8',8*nH,1);
+% Vif = [V3,V6,V8];
 
 %below is correct
 Ht = H';

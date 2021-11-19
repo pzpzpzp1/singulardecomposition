@@ -12,4 +12,5 @@ nH = size(H,1);
 nF = size(F,1);
 nE = size(E,1);
 nV = size(V,1);
+obj.faces = F;
 end
