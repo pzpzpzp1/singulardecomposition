@@ -30,13 +30,13 @@ function [F2] = faceedge2face(F1, E12, H,V)
     Fi = Fi';
     Hj = rem(Fi,nH); %Hj are the H1 and H2
 
-%this doesn't work---need to be fixed
+
     %step 2
     for i=1:3
-        if (sort(F2(i), 2)-sort(hex2face(H(Hj(1),:)),2))==0
-            F2 = setdiff(F2, F2(i))
-        elseif (sort(F2(i), 2)-sort(hex2face(H(Hj(2),:)),2))==0
-            F2 = setdiff(F2, F2(i))
-        end
+        if sort(F2(i), 2)-sort(hex2face(H(Hj(1),:)),2))==0
+            F2 = setdiff(F2, i)
+    Fh2 = find(all((sort(F2(i), 2)-sort(hex2face(H(Hj(2),:)),2))==0, 2));
     end
+    F2 = setdiff(F2, Fh1);
+    F2 = setdiff(F2, Fh2);
 end
