@@ -5,7 +5,7 @@ function [H2] = hexface2hex(H1, F12, H,V)
     V = mesh.points;
     H = mesh.cells;
     H1 = H(1,:); %setup
-    [~,~,F,H,~,~,nF,nH] = datastructure(V,H);
+    [~,~,F,H,~,~,~,nH] = datastructure(V,H);
     F12 = F(1,:); %setup
     end
     [V,E,F,H] = datastructure(V,H);
@@ -15,10 +15,10 @@ function [H2] = hexface2hex(H1, F12, H,V)
     Fi = [];
     for i = 1:nF
        if sort(F12, 2)-sort(F(i,:), 2)==0
-           Fi = [Fi; i];
-       end
-    end
-    Fi = Fi';
-    Hj = rem(Fi,nH); 
-    H2 = setdiff(Hj,Hi); %output is 0 needs to add nH
+           Fi = []
+
+
+    [Fi,~] = find(sort(F12,2)-sort(F,2)==0); %output rows and columns
+    %Hj = rem(Fi,nH);
+    H2 = setdiff(Hj,Hi);
 end
