@@ -12,35 +12,13 @@ function [F2] = facehex2face(F1, H1, H,V)
     %find all faces on H1
     F_h1 = hex2face(H1); %6*4 (6 faces per hex)
     %find all edges on F1
-    E1 = face2edge(F1);
+    E_f1 = face2edge(F1);
     %find all edges on F2- F6
-    E_f1 = face2edge(F_h1(1,:));
-    E_f2 = face2edge(F_h1(2,:));
-    E_f3 = face2edge(F_h1(3,:));
-    E_f4 = face2edge(F_h1(4,:));
-    E_f5 = face2edge(F_h1(5,:));
-    E_f6 = face2edge(F_h1(6,:));%6*(4*2) (4 edges per face)
-
-    [Fi(1),~] = ismember(sort(E1,2), sort(E_f1,2), 'rows');
-    [Fi(2),~] = ismember(sort(E1,2), sort(E_f2,2), 'rows');
-    [Fi(3),~] = ismember(sort(E1,2), sort(E_f3,2), 'rows');
-    [Fi(4),~] = ismember(sort(E1,2), sort(E_f4,2), 'rows');
-    [Fi(5),~] = ismember(sort(E1,2), sort(E_f5,2), 'rows');
-    [Fi(6),~] = ismember(sort(E1,2), sort(E_f6,2), 'rows');
-
-    for j=1:6
-        if Fi(j) == zeros(4,1)
-            F2 = Fih(j);
-        end
+    E_f = [];
+    for i =2:6
+    E_f2 = face2edge(F_h1(2,:)); %6*(4*2) (4 edges per face)
     end
-
-%     F2i = find(all((sort(E_f1, 2)- sort(E_f2, 2))==0, 2));
-%     F3i = find(all((sort(E_f1, 2)- sort(E_f3, 2))==0, 2));
-%     F4i = find(all((sort(E_f1, 2)- sort(E_f4, 2))==0, 2));
-%     F5i = find(all((sort(E_f1, 2)- sort(E_f5, 2))==0, 2));
-%     F6i = find(all((sort(E_f1, 2)- sort(E_f6, 2))==0, 2));
-
-   
+    Fi = find(all((sort(E_f1, 2)- sort(E_f(i), 2))==0, 2))
     
     % check if F2-F6 share edges with F1
 %     for 
@@ -61,5 +39,7 @@ function [F2] = facehex2face(F1, H1, H,V)
 %         [~,E4] = ismember(sort([F12(:,4),F12(:,1)],2),sort(Ef(i,:),2),"rows");
     %[~,El] = ismember(sort(Ef(i,:),2),sort(F2,2),"rows");
 %     end
-   % F2 = setdiff(Fj,Fi); %the one that doesn't include any pts in the intial face
+    F2 = setdiff(Fj,Fi); %the one that doesn't include any pts in the intial face
+    
+    
 end

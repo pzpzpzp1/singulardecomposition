@@ -16,10 +16,10 @@ function [F2] = faceedge2face(F1, E12, H,V)
     [~,Fi] = ismember(sort(F1,2), sort(F,2), 'rows'); %to find the index of the one to exclude
     Ei = find(all((sort(E12, 2)- sort(Eh, 2))==0, 2));
     Ei = Ei'; %missing value
-    %if the dimension is not 4, then return -1
+    %if the dimension is not 4, then return -1  -singularities
     Fj = rem(Ei,nF); 
-    %not sure why there are only 3 values here (instead of 4 adj. by assumption)
     F2 = setdiff(Fj,Fi); %output is 0 needs to add nF
+    
     %add another condition on F2 to make sure these faces do not share the
     %same hex as the other. 
     %1. given F1, find the H1 and H2 that includes F1
