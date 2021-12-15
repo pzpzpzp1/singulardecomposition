@@ -10,8 +10,9 @@ function [F2] = facehex2face(F1, H1, data)
  end
     %setup 
     data = builddatastruct(H,V);
-    E = data.Eh; F = data.Fh; H = data.H;
+    E = data.E; F = data.F; H = data.H, 
     nH = data.nH;
+    % [~,E,F,H,~,~,~,nH] = datastructure(V,H);
     %find all faces on H1
     F_h1 = hex2face(H1); %6*4 (6 faces per hex)
     %find all edges on F1
