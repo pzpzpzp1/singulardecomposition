@@ -11,8 +11,7 @@ function [H2] = hexface2hex(H1, F12, data, visualize)
     F12 = F(2,:);
     visualize =1;
     end
-    data = builddatastruct(H,V);
-    E = data.Eh; F = data.Fh; H = data.H; nH = data.nH;
+    V = data.V; E = data.Eh; F = data.Fh; H = data.H; nH = data.nH;
     [~,Hi] = ismember(sort(H1,2), sort(H,2), 'rows'); %to find the index of the one to exclude
     %ismember stops after finding one valid choice
     Fi = find(all((sort(F12, 2)- sort(F, 2))==0, 2));

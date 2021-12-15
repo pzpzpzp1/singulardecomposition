@@ -1,4 +1,4 @@
-function [F2] = facehex2face(F1, H1, data)
+function [F2] = facehex2face(F1, H1, data, visualization)
  if nargin==0
     file_name = 'sing1.vtk';
     mesh = load_vtk(file_name);
