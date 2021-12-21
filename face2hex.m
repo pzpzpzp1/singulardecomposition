@@ -1,4 +1,4 @@
-function [H1, H2] = face2hex (F,H,visualize)
+function [H1, H2] = face2hex (F1,data,visualize)
 
 %find 2 adjancent hex given a face
 if nargin==0
@@ -6,7 +6,7 @@ if nargin==0
     mesh = load_vtk(file_name);
     V = mesh.points;
     H = mesh.cells;
-    [F,~] = hex2face(H);
+    data = builddatastruct(H,V); F = data.F;
     F1 = F(1,:);
     visualize =1;
 end
