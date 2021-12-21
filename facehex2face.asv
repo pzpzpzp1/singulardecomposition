@@ -14,7 +14,7 @@ function [F2] = facehex2face(F1, H2, data, visualize)
     %get F2
     F2 = setdiff(H2, F1); %ordering might be wrong
     [~,IF2] = ismember(sort(F2,2), sort(F,2), 'rows');
-    F2 = F(IF2,:); % output the 4 vertex of F2
+    Vf2 = F(IF2,:);
 
     %graph
     Vh2 = V(H2,:);

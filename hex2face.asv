@@ -14,7 +14,16 @@ IFh = repmat((1:size(H,1))',6,1); %indexing for F in terms of H
 F = Fh(ia, :); %F (unique)
 
 %task: input the hex list and F (unique), output the 2 hex adj to the face
+%note: ib shows where F appears in Fh, then Fh loops through the hex
+%orderly (take the remainder)
 
+%Fi = find(all((sort(F, 2)- sort(Fh, 2))==0, 2));
+Fi = Fi';    Hj = rem(Fi,nH);
+%fix the remainder
+for i=1:nH
+if Hj(i) == 0
+   Hj(i) = nH;
+end
 end
 %F = uniqueF(ib,:)
 %unique facelist
