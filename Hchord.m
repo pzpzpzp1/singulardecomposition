@@ -29,7 +29,7 @@ end
 Vh = V(Hchord,:);
 if visualize == 1
     figure; title('Hchord'); axis equal; hold all; rotate3d on;
-    patch('Faces', F, 'Vertices', V, 'facecolor', 'blue', 'facealpha', 0.1);
+    patch('Faces', F, 'Vertices', V, 'facecolor', 'blue', 'facealpha', 0.01);
     scatter3(Vh(:,1), Vh(:,2), Vh(:,3), 'b', 'filled');
     patch('Faces', Fchord, 'Vertices', V, 'facecolor', 'green', 'facealpha', 0.1);
 end

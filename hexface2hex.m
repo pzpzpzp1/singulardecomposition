@@ -30,7 +30,7 @@ end
     %graph
     if visualize == 1
         figure; title('hexface2hex'); axis equal; hold all; rotate3d on;
-        patch('Faces', F, 'Vertices', V, 'facecolor', 'blue', 'facealpha', 0.1);
+        patch('Faces', F, 'Vertices', V, 'facecolor', 'blue', 'facealpha', 0.05);
         scatter3(Vh1(:,1), Vh1(:,2), Vh1(:,3), 'b', 'filled');
         patch('Faces', F12, 'Vertices', V, 'facecolor', 'green', 'facealpha', 0.1);
         patch('Faces', Fh, 'Vertices', V, 'facecolor', 'red', 'facealpha', 0.1);

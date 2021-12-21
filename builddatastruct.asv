@@ -13,7 +13,6 @@ end
     struct.nE = size(struct.Eh, 1);
     struct.nF = size(struct.Fh, 1);
    
-    %struct.adjH = face2hex(struct.F,H,0);   %given F, find the 2 adj.H
-
+    struct.adjH = face2hex(struct.F,H);   %given F, find the 2 adj.H
 end
    
